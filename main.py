@@ -14,14 +14,16 @@ DOWN_EMOJI = "🔴"
 
 
 def get_price():
-    url = "https://api.binance.com/api/v3/ticker/price?symbol=BCHUSDT"
+    url = "https://api.bybit.com/v5/market/tickers?category=spot&symbol=BCHUSDT"
     data = requests.get(url).json()
 
-    if "price" not in data:
+    if "result" not in data or "list" not in data["result"]:
         print("API returned unexpected data:", data)
         return None
 
-    return round(float(data["price"]), 2)
+    price = data["result"]["list"][0]["lastPrice"]
+    return round(float(price), 2)
+
 
 
 
