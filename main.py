@@ -15,7 +15,14 @@ DOWN_EMOJI = "🔴"
 
 def get_price():
     url = "https://api.bybit.com/v5/market/tickers?category=spot&symbol=BCHUSDT"
-    data = requests.get(url).json()
+    r = requests.get(url)
+
+    # Если пришёл не JSON — значит ошибка
+    try:
+        data = r.json()
+    except:
+        print("API returned non-JSON:", r.text[:200])
+        return None
 
     if "result" not in data or "list" not in data["result"]:
         print("API returned unexpected data:", data)
@@ -23,6 +30,7 @@ def get_price():
 
     price = data["result"]["list"][0]["lastPrice"]
     return round(float(price), 2)
+
 
 
 
