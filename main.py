@@ -14,22 +14,15 @@ DOWN_EMOJI = "🔴"
 
 
 def get_price():
-    url = "https://api.bybit.com/v5/market/tickers?category=spot&symbol=BCHUSDT"
-    r = requests.get(url)
+    url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin-cash&vs_currencies=usd"
+    data = requests.get(url).json()
 
-    # Если пришёл не JSON — значит ошибка
-    try:
-        data = r.json()
-    except:
-        print("API returned non-JSON:", r.text[:200])
-        return None
-
-    if "result" not in data or "list" not in data["result"]:
+    if "bitcoin-cash" not in data:
         print("API returned unexpected data:", data)
         return None
 
-    price = data["result"]["list"][0]["lastPrice"]
-    return round(float(price), 2)
+    return round(data["bitcoin-cash"]["usd"], 2)
+
 
 
 
@@ -53,7 +46,7 @@ while True:
         price = get_price()
 
         if price is None:
-            time.sleep(10)
+            time.sleep(40)
             continue
 
         # первая цена — просто запоминаем
