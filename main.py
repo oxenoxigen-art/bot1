@@ -14,14 +14,22 @@ DOWN_EMOJI = "🔴"
 
 
 def get_price():
-    url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin-cash&vs_currencies=usd"
-    data = requests.get(url).json()
+    url = "https://www.okx.com/api/v5/market/ticker?instId=BCH-USDT"
+    r = requests.get(url)
 
-    if "bitcoin-cash" not in data:
+    try:
+        data = r.json()
+    except:
+        print("API returned non-JSON:", r.text[:200])
+        return None
+
+    if "data" not in data or len(data["data"]) == 0:
         print("API returned unexpected data:", data)
         return None
 
-    return round(data["bitcoin-cash"]["usd"], 2)
+    price = data["data"][0]["last"]
+    return round(float(price), 2)
+
 
 
 
@@ -46,7 +54,7 @@ while True:
         price = get_price()
 
         if price is None:
-            time.sleep(40)
+            time.sleep(30)
             continue
 
         # первая цена — просто запоминаем
