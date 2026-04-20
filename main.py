@@ -14,14 +14,15 @@ DOWN_EMOJI = "🔴"
 
 
 def get_price():
-    url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin-cash&vs_currencies=usd"
+    url = "https://api.binance.com/api/v3/ticker/price?symbol=BCHUSDT"
     data = requests.get(url).json()
 
-    if "bitcoin-cash" not in data:
+    if "price" not in data:
         print("API returned unexpected data:", data)
         return None
 
-    return round(data["bitcoin-cash"]["usd"], 2)
+    return round(float(data["price"]), 2)
+
 
 
 def send_message(emoji, price, direction):
