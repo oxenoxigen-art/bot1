@@ -63,11 +63,11 @@ while True:
 
         # если цена изменилась больше чем на STEP — отправляем ОДНО сообщение
         if price >= last_trigger_price + STEP:
-            send_message(UP_EMOJI, price, "increased")
+            send_message(UP_EMOJI, price)
             last_trigger_price = price
 
         elif price <= last_trigger_price - STEP:
-            send_message(DOWN_EMOJI, price, "decreased")
+            send_message(DOWN_EMOJI, price)
             last_trigger_price = price
 
         time.sleep(20)
