@@ -36,10 +36,10 @@ def get_price():
 
 
 
-def send_message(emoji, price, direction):
+def send_message(emoji, price):
     url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
 
-    text = f"{emoji} Bitcoin Cash {direction} to {price}$ @bitcoin_cash_price"
+    text = f"{emoji} {price}$ @bitcoin_cash_price"
 
     r = requests.post(url, data={
         "chat_id": CHAT_ID,
@@ -47,6 +47,7 @@ def send_message(emoji, price, direction):
     })
 
     print("Telegram response:", r.text)
+
 
 
 while True:
