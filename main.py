@@ -6,7 +6,7 @@ TOKEN = os.getenv("TOKEN")
 CHAT_ID = os.getenv("CHAT_ID")
 
 
-STEP = 0.5
+STEP = 1
 last_trigger_price = None
 
 UP_EMOJI = "🟢"
